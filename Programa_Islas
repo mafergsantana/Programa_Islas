@@ -1,0 +1,44 @@
+def islas(matriz):
+    
+    def buscar_islas(i, j, island_size):
+        if i < 0 or i >= rows or j < 0 or j >= cols or matriz[i][j] == 0:
+            
+            return island_size
+        else:
+            
+            matriz[i][j] = 0
+            island_size += 1
+            
+            island_size = buscar_islas(i-1, j, island_size) 
+            island_size = buscar_islas(i+1, j, island_size) 
+            island_size = buscar_islas(i, j-1, island_size) 
+            island_size = buscar_islas(i, j+1, island_size) 
+            return island_size
+
+    island_sizes = []
+
+    
+    rows = len(matriz)
+    cols = len(matriz[0])
+
+    
+    for i in range(rows):
+        for j in range(cols):
+            if matriz[i][j] == 1:
+                
+                island_size = buscar_islas(i, j, 0)
+                island_sizes.append(island_size)
+
+    
+    return island_sizes
+
+matriz = [    [1, 1, 1, 0, 0],
+    [0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0],
+    [1, 0, 0, 1, 0]
+]
+
+island_sizes = islas(matriz)
+
+print("Tamaños de islas encontradas:", island_sizes)
+
